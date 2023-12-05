@@ -32,7 +32,7 @@ const Editor = ({
     if (initialData) {
       setData(initialData);
     }
-  }, [initialData]);
+  }, [initialData, setData]);
   useEffect(() => {
     if (!editorRef.current) {
       editorRef.current = new EditorJS({

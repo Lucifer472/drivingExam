@@ -20,7 +20,7 @@ const FaqForm = ({
     if (initialData) {
       setData(initialData);
     }
-  }, [initialData]);
+  }, [initialData, setData]);
   useEffect(() => {
     if (!editor.current) {
       editor.current = new EditorJS({

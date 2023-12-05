@@ -60,10 +60,11 @@ function setTokenSentToServer(sent) {
 
 messaging.onBackgroundMessage(function (payload) {
   if (!payload.hasOwnProperty("notification")) {
+    console.log("working");
     const notificationTitle = payload.data.title;
     const notificationOptions = {
       body: payload.data.body,
-      icon: "https://rtoexams.org/asset/logo.ico",
+      icon: "/asset/logo.webp",
     };
     self.registration.showNotification(notificationTitle, notificationOptions);
     self.addEventListener("notificationclick", function (event) {

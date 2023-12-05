@@ -15,10 +15,9 @@ const ScrollToTop = () => {
       const messaging = getMessaging(app);
       const unsubscribe = onMessage(messaging, (payload) => {
         if (payload.data === undefined) return null;
-        console.log("Foreground push notification received:", payload);
         new (Notification as any)(payload.data.title, {
           body: payload.data.body,
-          icon: "/",
+          icon: "/asset/logo.webp",
         });
       });
       return () => {
