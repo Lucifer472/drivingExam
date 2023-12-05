@@ -62,10 +62,6 @@ export default function RootLayout({
     }
   );
 
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("/firebase-messaging-sw.js");
-  }
-
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${poppins.className} overflow-x-hidden`}>
