@@ -52,11 +52,11 @@ const FaqSection = ({ faq }: { faq: any }) => {
           {faqs.map((f: any, index: number) => (
             <Accordion type="single" collapsible key={f.id}>
               <AccordionItem value={`item-${index + 1}`}>
-                <AccordionTrigger className="text-lg sm:text-xl ">
-                  {f.question}
+                <AccordionTrigger className="text-lg sm:text-xl">
+                  <span dangerouslySetInnerHTML={{ __html: f.question }}></span>
                 </AccordionTrigger>
                 <AccordionContent className="text-base sm:text-lg">
-                  {f.answer}
+                  <span dangerouslySetInnerHTML={{ __html: f.answer }}></span>
                 </AccordionContent>
               </AccordionItem>
             </Accordion>

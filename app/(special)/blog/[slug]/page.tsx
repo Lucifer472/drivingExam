@@ -97,9 +97,6 @@ const page = async ({ params }: { params: { slug: string } }) => {
     ],
   };
 
-  let isFaq = false;
-  if (faq === undefined) isFaq = true;
-
   return (
     <div className="bg-white global-container w-full h-full">
       <script
@@ -130,7 +127,7 @@ const page = async ({ params }: { params: { slug: string } }) => {
         </Link>
       </div>
       <BlogMain blog={blog as any} link={categoryLink} />
-      {isFaq && <FaqSection faq={faq[0].faq} />}
+      {faq.length !== 0 && <FaqSection faq={faq[0].faq} />}
       <RecentBlog
         options={{
           take: 3,
