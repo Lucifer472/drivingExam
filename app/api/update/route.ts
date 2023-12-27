@@ -28,54 +28,57 @@ export async function POST(req: Request) {
     }
   }
 
-  const blog = await db.blog.update({
-    where: {
-      id: id,
-    },
-    data: {
-      title,
-      url: url.replace(/\s+/g, "-"),
-      author: user.username,
-      img,
-      keywords,
-      description,
-      blog: block,
-      category,
-      expiredAt,
-      state: user.type === "user" ? "pending" : "approve",
-    },
-  });
-
   try {
-    const isFaq = await db.faq.findUnique({
+    const blog = await db.blog.update({
       where: {
-        blogId: id,
+        id: id,
+      },
+      data: {
+        title,
+        url: url.replace(/\s+/g, "-"),
+        author: user.username,
+        img,
+        keywords,
+        description,
+        blog: block,
+        category,
+        expiredAt,
+        state: user.type === "user" ? "pending" : "approve",
       },
     });
-    if (isFaq === null) {
-      await db.faq.create({
-        data: { blogId: id, faq: faq.blocks },
-      });
-    } else {
-      await db.faq.update({
+
+    try {
+      const isFaq = await db.faq.findUnique({
         where: {
           blogId: id,
         },
-        data: { faq: faq.blocks },
+      });
+      if (isFaq === null) {
+        await db.faq.create({
+          data: { blogId: id, faq: faq.blocks },
+        });
+      } else {
+        await db.faq.update({
+          where: {
+            blogId: id,
+          },
+          data: { faq: faq.blocks },
+        });
+      }
+    } catch (error) {
+      console.log("No FAQ PROVIDED");
+    }
+
+    if (blog) {
+      return NextResponse.json({
+        Message: "Blog Succesfully Updated!",
+        status: 200,
       });
     }
   } catch (error) {
-    console.log("No FAQ PROVIDED");
-  }
-
-  if (blog) {
-    return NextResponse.json({
-      Message: "Blog Succesfully Updated!",
-      status: 200,
-    });
-  } else {
     return NextResponse.json({
       Message: "An Error has Occured!",
+      data: error,
       status: 301,
     });
   }

@@ -40,8 +40,12 @@ const blogSchema = z.object({
     message: "Minimum of 15 Latters are required to post a blog!",
   }),
   url: z.string(),
-  keywords: z.string(),
-  description: z.string(),
+  keywords: z.string().max(190, {
+    message: "Maxmimum of 190 Latters are Allowed!",
+  }),
+  description: z.string().max(190, {
+    message: "Maxmimum of 190 Latters are Allowed!",
+  }),
   category: z.string(),
   expiredAt: z.date(),
 });

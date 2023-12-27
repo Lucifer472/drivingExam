@@ -32,38 +32,38 @@ export async function POST(req: Request) {
     });
   }
 
-  const blog = await db.blog.create({
-    data: {
-      title,
-      url: url.replace(/\s+/g, "-"),
-      author: user.username,
-      img,
-      keywords,
-      description,
-      blog: block,
-      category,
-      expiredAt,
-      state: user.type === "user" ? "pending" : "approve",
-    },
-  });
-
   try {
-    await db.faq.create({
-      data: { blogId: blog.id, faq: faq.blocks },
+    const blog = await db.blog.create({
+      data: {
+        title,
+        url: url.replace(/\s+/g, "-"),
+        author: user.username,
+        img,
+        keywords,
+        description,
+        blog: block,
+        category,
+        expiredAt,
+        state: user.type === "user" ? "pending" : "approve",
+      },
     });
-  } catch (error) {
-    console.log("No FAQ PROVIDED");
-  }
 
-  if (blog) {
+    try {
+      await db.faq.create({
+        data: { blogId: blog.id, faq: faq.blocks },
+      });
+    } catch (error) {
+      console.log("No FAQ PROVIDED");
+    }
     return NextResponse.json({
       Message: "Blog Succesfully Created",
       status: 200,
     });
-  } else {
+  } catch (error) {
     return NextResponse.json({
-      Message: "An Error has Occured!",
-      status: 301,
+      Message: "Unable to Create Blog",
+      data: error,
+      status: 500,
     });
   }
 }
