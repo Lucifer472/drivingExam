@@ -65,7 +65,7 @@ const BlogEdit = ({
   };
   id: number;
   blogData: JsonValue;
-  faqData: JsonValue;
+  faqData?: JsonValue;
 }) => {
   const [data, setData] = useState<any>({});
   const [faq, setFaq] = useState<any>({});

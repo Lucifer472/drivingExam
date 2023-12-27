@@ -11,16 +11,13 @@ const page = async ({ params }: { params: { url: string } }) => {
   });
 
   if (data === null) return redirect("/admin");
-
   const faq = await getFaq(data.id);
 
   const { blog, title, url, category, description, keywords, expiredAt, id } =
     data;
-
   const BlogEdit = dynamic(() => import("@/components/admin/BlogEdit"), {
     ssr: false,
   });
-
   return (
     <section className="bg-slate-100 w-full h-full">
       <div className="global-container w-full h-full bg-white">
@@ -48,11 +45,15 @@ const page = async ({ params }: { params: { url: string } }) => {
                 blocks: blog,
                 version: "2.28.2",
               }}
-              faqData={{
-                time: 1700482255444,
-                blocks: faq[0].faq,
-                version: "2.28.2",
-              }}
+              faqData={
+                faq.length !== 0
+                  ? {
+                      time: 1700482255444,
+                      blocks: faq[0].faq,
+                      version: "2.28.2",
+                    }
+                  : undefined
+              }
             />
           </div>
         </div>
